@@ -50,4 +50,4 @@ for i in range(1, len(MainMenu)):
     diet = Mains.Diet(Menu)
     cost = Mains.Cost(Menu)
 
-    print(f"{dish} - {desc} with options {opt} additional dietary options {diet}. - {cost}")
+    print(f"{dish} - {desc}, with options {opt}, additional dietary options {diet}. - {cost}")
