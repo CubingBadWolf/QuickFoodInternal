@@ -1,0 +1,13 @@
+class Mains:
+    def __init__(self, Name, Description, Options, Dietary, Cost):
+        self.Cost = Cost
+        self.Dietary = Dietary
+        self.Options = Options
+        self.Description = Description
+        self.Name = Name
+
+    def Func(self):
+        print(self.Name)
+
+
+Mains.Func(' '.join(MainMenu))
