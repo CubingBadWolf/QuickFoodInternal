@@ -64,6 +64,24 @@ def checkAmount(user):
             print('Please enter a number from 0 - 4')
 
 
+def PrintMenuAndOrder(menu, amount):
+    for i in range(1, len(menu)):
+        print(f"{i}: {menu[i][0]} - {menu[i][1]} with options {menu[i][2]} additional dietary options {menu[i][3]}. - {menu[i][4]}")
+    while True:
+        order_num = input(f'Main number {amount}: Which meal would you like to order? \n')
+        try:
+            order_num = int(order_num)
+            if 1 <= order_num <= len(menu)+1:
+                return order_num
+            else:
+                print('Please enter a valid order number')
+        except ValueError:
+            print('Please enter a valid order number')
+
+
 while True:  # Initiates the order
+    orders = []
     name = input('What is your name? \n')
     amn = checkAmount(name)
+    for n in range(amn):
+        orders.append(PrintMenuAndOrder(MainMenu, amn))
