@@ -42,12 +42,29 @@ class Mains:
         return self.Cost
 
 
-for i in range(1, len(MainMenu)):
-    Menu = Mains(MainMenu[i][0], MainMenu[i][1], MainMenu[i][2], MainMenu[i][3], MainMenu[i][4])
-    dish = Mains.Dish(Menu)
-    desc = Mains.Desc(Menu)
-    opt = Mains.Opt(Menu)
-    diet = Mains.Diet(Menu)
-    cost = Mains.Cost(Menu)
+def checkAmount(user):
+    while True:
+        amount = input(f'Hi {user}, How many main meals would you like to order? Max 4 \n')
+        try:
+            amount = int(amount)
+            if 0 <= amount <= 4:
+                while True:
+                    yn = input(f'You entered {amount}. Is that correct Y/N')
+                    if not yn.isalpha():
+                        print('Please enter Y or N')
+                    elif yn.lower() == 'y':
+                        return amount
+                    elif yn.lower() == 'n':
+                        break
+                    else:
+                        print(f'Please enter Y or N v2 {yn.lower()}')
+            else:
+                print('Please enter a number from 0 - 4')
+        except ValueError:
+            print('Please enter a number from 0 - 4 v2')
 
-    print(f"{dish} - {desc}, with options {opt}, additional dietary options {diet}. - {cost}")
+
+while True:  # Initiates the order
+    name = input('What is your name? \n')
+    amn = checkAmount(name)
+
