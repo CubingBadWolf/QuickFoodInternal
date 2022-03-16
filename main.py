@@ -64,7 +64,7 @@ def checkAmount(user):
             print('Please enter a number from 0 - 4')
 
 
-def PrintMenuAndOrder(menu, amount):
+def PrintMainMenuAndOrder(menu, amount):
     for i in range(1, len(menu)):
         print(f"{i}: {menu[i][0]} - {menu[i][1]} with options {menu[i][2]} additional dietary options {menu[i][3]}. - {menu[i][4]}")
     while True:
@@ -79,9 +79,51 @@ def PrintMenuAndOrder(menu, amount):
             print('Please enter a valid order number')
 
 
+def checkDrinkAmount(user):
+    while True:
+        amount = input('How many drinks would you like to order? \n')
+        try:
+            amount = int(amount)
+            if 0 <= amount:
+                while True:
+                    yn = input(f'You entered {amount}. Is that correct Y/N')
+                    if not yn.isalpha():
+                        print('Please enter Y or N')
+                    elif yn.lower() == 'y':
+                        return amount
+                    elif yn.lower() == 'n':
+                        break
+                    else:
+                        print(f'Please enter Y or N')
+            else:
+                print('Please enter a positive integer')
+        except ValueError:
+            print('Please enter a positive integer')
+
+
+def PrintDrinkMenuAndOrder(menu, amount):
+    for i in range(1, len(menu)):
+        print(f"{i}: {menu[i][0]} - {menu[i][1]} with options {menu[i][2]}. - {menu[i][3]}")
+    while True:
+        order_num = input(f'Drink number {amount}: Which drink would you like to order? \n')
+        try:
+            order_num = int(order_num)
+            if 1 <= order_num <= len(menu)+1:
+                return order_num
+            else:
+                print('Please enter a valid order number')
+        except ValueError:
+            print('Please enter a valid order number')
+
+
 while True:  # Initiates the order
-    orders = []
+    orders = [[], []] # [[Mains], [Drinks]]
     name = input('What is your name? \n')
     amn = checkAmount(name)
+    d_amn = checkDrinkAmount(name)
     for n in range(amn):
-        orders.append(PrintMenuAndOrder(MainMenu, amn))
+        orders[0].append(PrintMainMenuAndOrder(MainMenu, amn))
+    for r in range(d_amn):
+        orders[1].append(PrintDrinkMenuAndOrder(Drinks, d_amn))
+    print(orders)
+    break
