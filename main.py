@@ -57,11 +57,11 @@ def checkAmount(user):
                     elif yn.lower() == 'n':
                         break
                     else:
-                        print(f'Please enter Y or N v2 {yn.lower()}')
+                        print(f'Please enter Y or N')
             else:
                 print('Please enter a number from 0 - 4')
         except ValueError:
-            print('Please enter a number from 0 - 4 v2')
+            print('Please enter a number from 0 - 4')
 
 
 while True:  # Initiates the order
