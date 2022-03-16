@@ -67,4 +67,3 @@ def checkAmount(user):
 while True:  # Initiates the order
     name = input('What is your name? \n')
     amn = checkAmount(name)
-
