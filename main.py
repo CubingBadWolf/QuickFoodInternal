@@ -47,7 +47,7 @@ def GetOptions(menu, meal_num):
         for i in range(len(opt)):
             print(f'{i+1}: {opt[i]}')
         opt_num = input("What is the option you'd like")
-        return f'{meal_num}/{opt_num}'
+        return [meal_num, opt_num]
     else:
         return meal_num
 
@@ -119,4 +119,9 @@ while True:  # Initiates the order
         orders[1].append(PrintDrinkMenuAndOrder(Drinks, r+1))
     print(orders)
 
+    price = 0
+    for i in range(len(orders)):
+        for p in range(len(orders[i])):
+            price = price + float(MainMenu[orders[i][p]][-1].replace('$', '0'))
+    print(price)
     break
