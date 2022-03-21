@@ -1,13 +1,26 @@
+
 class Mains:
     def __init__(self, Name, Description, Options, Dietary, Cost):
         self.Cost = Cost
         self.Dietary = Dietary
         self.Options = Options
         self.Description = Description
-        self.Name = Name
+        self.Dish = Name
 
-    def Func(self):
-        print(self.Name)
+    def Dish(self):
+        return self.Dish
 
+    def Desc(self):
+        return self.Description
 
-Mains.Func(' '.join(MainMenu))
+    def Opt(self):
+        return self.Options
+
+    def Diet(self):
+        if self.Dietary == '':
+            return 'N/A'
+        else:
+            return self.Dietary
+
+    def Cost(self):
+        return self.Cost

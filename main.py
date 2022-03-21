@@ -15,33 +15,6 @@ MainMenu = ReadFile('Menu for Year 12 Internal - Sheet1.csv')
 Drinks = ReadFile('Drinks Menu - Sheet1.csv')
 
 
-class Mains:
-    def __init__(self, Name, Description, Options, Dietary, Cost):
-        self.Cost = Cost
-        self.Dietary = Dietary
-        self.Options = Options
-        self.Description = Description
-        self.Dish = Name
-
-    def Dish(self):
-        return self.Dish
-
-    def Desc(self):
-        return self.Description
-
-    def Opt(self):
-        return self.Options
-
-    def Diet(self):
-        if self.Dietary == '':
-            return 'N/A'
-        else:
-            return self.Dietary
-
-    def Cost(self):
-        return self.Cost
-
-
 def checkAmount(user):
     while True:
         amount = input(f'Hi {user}, How many main meals would you like to order? Max 4 \n')
@@ -64,7 +37,23 @@ def checkAmount(user):
             print('Please enter a number from 0 - 4')
 
 
+def GetOptions(menu, meal_num):
+    if menu[meal_num][2] != '':
+        opt = menu[meal_num][2].replace(', ', ' OR ')
+        opt = menu[meal_num][2].replace('/', ' OR ')
+        opt = opt.split(' OR ')
+        opt.insert(0,'No additional item')
+
+        for i in range(len(opt)):
+            print(f'{i+1}: {opt[i]}')
+        opt_num = input("What is the option you'd like")
+        return f'{meal_num}/{opt_num}'
+    else:
+        return meal_num
+
+
 def PrintMainMenuAndOrder(menu, amount):
+    print('Here is your main menu')
     for i in range(1, len(menu)):
         print(f"{i}: {menu[i][0]} - {menu[i][1]} with options {menu[i][2]} additional dietary options {menu[i][3]}. - {menu[i][4]}")
     while True:
@@ -72,7 +61,7 @@ def PrintMainMenuAndOrder(menu, amount):
         try:
             order_num = int(order_num)
             if 1 <= order_num <= len(menu)+1:
-                return order_num
+                return GetOptions(menu, order_num)
             else:
                 print('Please enter a valid order number')
         except ValueError:
@@ -102,6 +91,7 @@ def checkDrinkAmount(user):
 
 
 def PrintDrinkMenuAndOrder(menu, amount):
+    print('Here is your drinks menu:')
     for i in range(1, len(menu)):
         print(f"{i}: {menu[i][0]} - {menu[i][1]} with options {menu[i][2]}. - {menu[i][3]}")
     while True:
@@ -109,7 +99,7 @@ def PrintDrinkMenuAndOrder(menu, amount):
         try:
             order_num = int(order_num)
             if 1 <= order_num <= len(menu)+1:
-                return order_num
+                return GetOptions(menu, order_num)
             else:
                 print('Please enter a valid order number')
         except ValueError:
@@ -117,13 +107,16 @@ def PrintDrinkMenuAndOrder(menu, amount):
 
 
 while True:  # Initiates the order
-    orders = [[], []] # [[Mains], [Drinks]]
+    orders = [[], []]  # [[Mains], [Drinks]]
     name = input('What is your name? \n')
+
     amn = checkAmount(name)
-    d_amn = checkDrinkAmount(name)
     for n in range(amn):
-        orders[0].append(PrintMainMenuAndOrder(MainMenu, amn))
+        orders[0].append(PrintMainMenuAndOrder(MainMenu, n+1))
+
+    d_amn = checkDrinkAmount(name)
     for r in range(d_amn):
-        orders[1].append(PrintDrinkMenuAndOrder(Drinks, d_amn))
+        orders[1].append(PrintDrinkMenuAndOrder(Drinks, r+1))
     print(orders)
+
     break
