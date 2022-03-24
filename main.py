@@ -43,18 +43,29 @@ def GetOptions(menu, meal_num):
         opt = menu[meal_num][2].replace(', ', ' OR ')
         opt = opt.replace('/', ' OR ')
         opt = opt.split(' OR ')
-        opt.insert(0, 'No additional item')
+        options = [meal_num]
 
-        for q in range(len(opt)):
-            print(f'{q + 1}: {opt[q]}')
         while True:
-            opt_num = input("What is the option you'd like")
-            try:
-                opt_num = int(opt_num)
-                break
-            except ValueError:
-                print('Please enter a valid integer.')
-        return [meal_num, opt_num]
+            for q in range(len(opt)):
+                print(f'{q + 1}: {opt[q]}')
+
+            while True:
+                check = input('Would you like to add an option').lower()
+                if check == 'n':
+                    return options
+                elif check == 'y':
+                    break
+                else:
+                    print('please enter y or n')
+
+            while True:
+                opt_num = input("What is the option you'd like")
+                try:
+                    opt_num = int(opt_num)
+                    break
+                except ValueError:
+                    print('Please enter a valid integer.')
+            options.append(opt_num)
     else:
         return meal_num
 
@@ -157,18 +168,19 @@ while True:  # Initiates the order
 
     price = 0
     for main_order in orders[0]:
-        try:
-            main_order = int(main_order)
-            price = price + float(MainMenu[main_order-1][4].replace('$','0'))
-        except TypeError:
-            main_order = main_order[0]
+        if type(main_order) == int:
+            price = price + float(MainMenu[main_order][4].replace('$', '0'))
+        elif type(main_order) == list:
+            main_num = main_order[0]
             main_opt = main_order[1]
-            optList = MainMenu[main_order][2].replace(', ', ' OR ')
+            optList = MainMenu[main_num][2].replace(', ', ' OR ')
             optList = optList.replace('/', ' OR ')
             optList = optList.split(' OR ')
-            if '$' in optList[main_opt]:
-                m = re.search('\$\d+(?:\.\d+)?', optList[main_opt])
-                order_price = m.group(1)
-                price
 
+            if '$' in optList[main_opt]:
+                s = re.compile('\$([0-9.]+)')
+                m = re.search(s, optList[main_opt])
+                order_price = m.group(1)
+                price = price + float(order_price)
+    print(f'${price}')
     break
