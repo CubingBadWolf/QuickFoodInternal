@@ -38,12 +38,12 @@ def checkAmount(user):
             print('Please enter a number from 0 - 4')
 
 
-def GetOptions(menu, meal_num):
+def GetOptions(menu, meal_num):  # TODO Make duplicate options invalid
     if menu[meal_num][2] != '':
         opt = menu[meal_num][2].replace(', ', ' OR ')
         opt = opt.replace('/', ' OR ')
         opt = opt.split(' OR ')
-        options = [meal_num]
+        options = [meal_num, []]
 
         while True:
             for q in range(len(opt)):
@@ -65,9 +65,35 @@ def GetOptions(menu, meal_num):
                     break
                 except ValueError:
                     print('Please enter a valid integer.')
-            options.append(opt_num)
+            options[1].append(opt_num)
     else:
         return meal_num
+
+
+def GetDrinkOptions(menu, drink_number):
+    if menu[drink_number][2] != '':
+        opt = menu[drink_number][2].replace(', ', ' OR ')
+        opt = opt.replace('/', ' OR ')
+        opt = opt.split(' OR ')
+        options = [drink_number, []]
+
+        for q in range(len(opt)):
+            print(f'{q + 1}: {opt[q]}')
+
+        while True:
+            opt_num = input("What is the option you'd like")
+            try:
+                opt_num = int(opt_num)
+                if 0 >= opt_num >= (len(opt)):
+                    print('Please enter a valid order number')
+                    continue
+                else:
+                    break
+            except ValueError:
+                print('Please enter a valid integer.')
+        options[1].append(opt_num)
+    else:
+        return drink_number
 
 
 def PrintMainMenuAndOrder(menu, amount):
@@ -125,7 +151,7 @@ def PrintDrinkMenuAndOrder(menu, amount):
         try:
             order_num = int(order_num)
             if 1 <= order_num <= len(menu) + 1:
-                return GetOptions(menu, order_num)
+                return GetDrinkOptions(menu, order_num)
             else:
                 print('Please enter a valid order number')
         except ValueError:
@@ -164,23 +190,38 @@ while True:  # Initiates the order
     d_amn = checkDrinkAmount()
     for r in range(d_amn):
         orders[1].append(PrintDrinkMenuAndOrder(Drinks, r + 1))
-    print(orders)
 
     price = 0
     for main_order in orders[0]:
         if type(main_order) == int:
             price = price + float(MainMenu[main_order][4].replace('$', '0'))
+
         elif type(main_order) == list:
-            main_num = main_order[0]
+            main_num = main_order[0]  # [Menu Number, [Main Option 1, Main Option 2, etc]]
             main_opt = main_order[1]
             optList = MainMenu[main_num][2].replace(', ', ' OR ')
             optList = optList.replace('/', ' OR ')
             optList = optList.split(' OR ')
 
-            if '$' in optList[main_opt]:
-                s = re.compile('\$([0-9.]+)')
-                m = re.search(s, optList[main_opt])
-                order_price = m.group(1)
-                price = price + float(order_price)
+            for option in main_opt:
+                if '$' in optList[option - 1]:
+                    s = re.compile('\$([0-9.]+)')
+                    m = re.search(s, optList[option - 1])
+                    order_price = m.group(1)
+                    price = price + float(order_price)
+                else:
+                    pass
+            price = price + float(MainMenu[main_num][4].replace('$', '0'))
+
+    for drink_order in orders[1]:
+        if type(drink_order) == int:
+            price = price + float(Drinks[drink_order][3].replace('$', '0'))
+
+        elif type(drink_order) == list:
+            drink_num = drink_order[0]
+            drink_opt = drink_order[1]
+
+            price = price + float(Drinks[drink_num][3].replace('$', '0'))
+
     print(f'${price}')
     break
