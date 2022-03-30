@@ -74,7 +74,9 @@ def GetOptions(menu, meal_num):  # TODO Make duplicate options invalid
                     break
                 except ValueError:
                     print('Please enter a valid integer.')
+
             options[1].append(opt_num)
+            print(options[1])
     else:
         return meal_num
 
@@ -110,7 +112,7 @@ def PrintMainMenuAndOrder(menu, amount):
     for q in range(1, len(menu)):
         if menu[q][2] != '':
             print(
-                f"{q}: {menu[q][0]} - {menu[q][1]}: With options: {menu[q][2]}. - {menu[q][4]}")  # TODO AddDietaryOptions
+                f"{q}: {menu[q][0]} - {menu[q][1]}: With options: {menu[q][2]}. - {menu[q][4]}")
         else:
             print(f"{q}: {menu[q][0]} - {menu[q][1]}. - {menu[q][4]}")
     while True:
