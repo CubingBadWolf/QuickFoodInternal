@@ -47,7 +47,7 @@ def checkAmount(user):
             print('Please enter a number from 0 - 4')
 
 
-def GetOptions(menu, meal_num):  # TODO Make duplicate options invalid
+def GetOptions(menu, meal_num):  # TODO Make duplicate options invalid + incorrect options not being caught.
     if menu[meal_num][2] != '':
         opt = menu[meal_num][2].replace(', ', ' OR ')
         opt = opt.replace('/', ' OR ')
@@ -76,12 +76,11 @@ def GetOptions(menu, meal_num):  # TODO Make duplicate options invalid
                     print('Please enter a valid integer.')
 
             options[1].append(opt_num)
-            print(options[1])
     else:
         return meal_num
 
 
-def GetDrinkOptions(menu, drink_number):
+def GetDrinkOptions(menu, drink_number): #TODO Incorrect numbers not being caught
     if menu[drink_number][2] != '':
         opt = menu[drink_number][2].replace(', ', ' OR ')
         opt = opt.replace('/', ' OR ')
