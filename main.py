@@ -1,5 +1,6 @@
 import csv
 import re
+import sys
 
 
 def ReadFile(file):
@@ -16,14 +17,22 @@ MainMenu = ReadFile('Menu for Year 12 Internal - Sheet1.csv')
 Drinks = ReadFile('Drinks Menu - Sheet1.csv')
 
 
+def Input(prompt):
+    IN = input(prompt).lower()
+    if IN == 'cancel':
+        sys.exit('Canceled order')
+    else:
+        return IN
+
+
 def checkAmount(user):
     while True:
-        amount = input(f'Hi {user}, How many main meals would you like to order? Max 4 \n')
+        amount = Input(f'Hi {user}, How many main meals would you like to order? Max 4 \n')
         try:
             amount = int(amount)
             if 0 <= amount <= 4:
                 while True:
-                    yn = input(f'You entered {amount}. Is that correct Y/N')
+                    yn = Input(f'You entered {amount}. Is that correct Y/N')
                     if not yn.isalpha():
                         print('Please enter Y or N')
                     elif yn.lower() == 'y':
@@ -50,7 +59,7 @@ def GetOptions(menu, meal_num):  # TODO Make duplicate options invalid
                 print(f'{q + 1}: {opt[q]}')
 
             while True:
-                check = input('Would you like to add an option').lower()
+                check = Input('Would you like to add an option').lower()
                 if check == 'n':
                     return options
                 elif check == 'y':
@@ -59,7 +68,7 @@ def GetOptions(menu, meal_num):  # TODO Make duplicate options invalid
                     print('please enter y or n')
 
             while True:
-                opt_num = input("What is the option you'd like")
+                opt_num = Input("What is the option you'd like")
                 try:
                     opt_num = int(opt_num)
                     break
@@ -81,7 +90,7 @@ def GetDrinkOptions(menu, drink_number):
             print(f'{q + 1}: {opt[q]}')
 
         while True:
-            opt_num = input("What is the option you'd like")
+            opt_num = Input("What is the option you'd like")
             try:
                 opt_num = int(opt_num)
                 if 0 >= opt_num >= (len(opt)):
@@ -105,7 +114,7 @@ def PrintMainMenuAndOrder(menu, amount):
         else:
             print(f"{q}: {menu[q][0]} - {menu[q][1]}. - {menu[q][4]}")
     while True:
-        order_num = input(f'Main number {amount}: Which meal would you like to order? \n')
+        order_num = Input(f'Main number {amount}: Which meal would you like to order? \n')
         try:
             order_num = int(order_num)
             if 1 <= order_num <= len(menu) + 1:
@@ -118,12 +127,12 @@ def PrintMainMenuAndOrder(menu, amount):
 
 def checkDrinkAmount():
     while True:
-        amount = input('How many drinks would you like to order? \n')
+        amount = Input('How many drinks would you like to order? \n')
         try:
             amount = int(amount)
             if 0 <= amount:
                 while True:
-                    yn = input(f'You entered {amount}. Is that correct Y/N')
+                    yn = Input(f'You entered {amount}. Is that correct Y/N')
                     if not yn.isalpha():
                         print('Please enter Y or N')
                     elif yn.lower() == 'y':
@@ -147,7 +156,7 @@ def PrintDrinkMenuAndOrder(menu, amount):
             print(f"{q}: {menu[q][0]} - {menu[q][1]}. - {menu[q][3]}")
 
     while True:
-        order_num = input(f'Drink number {amount}: Which drink would you like to order? \n')
+        order_num = Input(f'Drink number {amount}: Which drink would you like to order? \n')
         try:
             order_num = int(order_num)
             if 1 <= order_num <= len(menu) + 1:
@@ -164,7 +173,7 @@ def CheckInt(num):
             num = int(num)
             if 0 <= num:
                 while True:
-                    yn = input(f'You entered {num}. Is that correct Y/N')
+                    yn = Input(f'You entered {num}. Is that correct Y/N')
                     if not yn.isalpha():
                         print('Please enter Y or N')
                     elif yn.lower() == 'y':
@@ -181,7 +190,7 @@ def CheckInt(num):
 
 while True:  # Initiates the order
     orders = [[], []]  # [[Mains], [Drinks]]
-    name = input('What is your name? \n')
+    name = Input('What is your name? \n')
 
     amn = checkAmount(name)
     for n in range(amn):
