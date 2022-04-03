@@ -54,6 +54,8 @@ def GetOptions(menu, meal_num):  # TODO incorrect options not being caught.
         opt = opt.split(' OR ')
         options = [meal_num, []]
 
+        print(len(opt))
+
         while True:
             if len(options[1]) == len(opt):
                 break
@@ -62,7 +64,7 @@ def GetOptions(menu, meal_num):  # TODO incorrect options not being caught.
                 print(f'{q + 1}: {opt[q]}')
 
             while True:
-                check = Input('Would you like to add an option').lower()
+                check = Input('Would you like to add an option? Y/N').lower()
                 if check == 'n':
                     return options
                 elif check == 'y':
@@ -74,11 +76,16 @@ def GetOptions(menu, meal_num):  # TODO incorrect options not being caught.
                 opt_num = Input("What is the option you'd like")
                 try:
                     opt_num = int(opt_num)
-                    if opt_num in options[1]:
-                        print('You already have this option')
-                        continue
+                    if 1 <= opt_num <= len(opt):
+                        if opt_num in options[1]:
+                            print('You already have this option')
+                            continue
+                        else:
+                            break
+
                     else:
-                        break
+                        print('Please enter a valid option')
+                        continue
                 except ValueError:
                     print('Please enter a valid integer.')
 
@@ -95,6 +102,8 @@ def GetDrinkOptions(menu, drink_number):  # TODO Incorrect numbers not being cau
         opt = opt.split(' OR ')
         options = [drink_number, []]
 
+        print(len(opt))
+
         for q in range(len(opt)):
             print(f'{q + 1}: {opt[q]}')
 
@@ -102,11 +111,11 @@ def GetDrinkOptions(menu, drink_number):  # TODO Incorrect numbers not being cau
             opt_num = Input("What is the option you'd like")
             try:
                 opt_num = int(opt_num)
-                if 0 >= opt_num >= (len(opt)):
+                if 1 <= opt_num <= (len(opt)):
+                    break
+                else:
                     print('Please enter a valid order number')
                     continue
-                else:
-                    break
             except ValueError:
                 print('Please enter a valid integer.')
         options[1].append(opt_num)
@@ -177,28 +186,8 @@ def PrintDrinkMenuAndOrder(menu, amount):
             print('Please enter a valid order number')
 
 
-def CheckInt(num):
-    while True:
-        try:
-            num = int(num)
-            if 0 <= num:
-                while True:
-                    yn = Input(f'You entered {num}. Is that correct Y/N')
-                    if not yn.isalpha():
-                        print('Please enter Y or N')
-                    elif yn.lower() == 'y':
-                        return num
-                    elif yn.lower() == 'n':
-                        break
-                    else:
-                        print(f'Please enter Y or N')
-            else:
-                print('Please enter a positive integer')
-        except ValueError:
-            print('Please enter a positive integer')
-
-
 def main():  # Initiates the order
+    print('Welcome to Quick Food. Enter cancel at any time to cancel the order.')
     orders = [[], []]  # [[Mains], [Drinks]]
     name = Input('What is your name? \n')
 
