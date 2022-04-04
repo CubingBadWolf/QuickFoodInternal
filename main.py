@@ -47,7 +47,7 @@ def checkAmount(user):
             print('Please enter a number from 0 - 4')
 
 
-def GetOptions(menu, meal_num):  # TODO incorrect options not being caught.
+def GetOptions(menu, meal_num):
     if menu[meal_num][2] != '':
         opt = menu[meal_num][2].replace(', ', ' OR ')
         opt = opt.replace('/', ' OR ')
@@ -95,7 +95,7 @@ def GetOptions(menu, meal_num):  # TODO incorrect options not being caught.
         return meal_num
 
 
-def GetDrinkOptions(menu, drink_number):  # TODO Incorrect numbers not being caught
+def GetDrinkOptions(menu, drink_number):
     if menu[drink_number][2] != '':
         opt = menu[drink_number][2].replace(', ', ' OR ')
         opt = opt.replace('/', ' OR ')
@@ -146,10 +146,10 @@ def PrintMainMenuAndOrder(menu, amount):
 
 def checkDrinkAmount(menu):
     while True:
-        amount = Input('How many drinks would you like to order? \n')
+        amount = Input('How many drinks would you like to order? Max 10.\n')
         try:
             amount = int(amount)
-            if 0 <= amount <= len(menu):
+            if 0 <= amount <= 10:
                 while True:
                     yn = Input(f'You entered {amount}. Is that correct Y/N')
                     if not yn.isalpha():
