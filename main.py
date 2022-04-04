@@ -1,9 +1,11 @@
 import csv
 import re
 import sys
+# Imports the modules needed for this script
 
 
 def ReadFile(file):
+    """Reads a .csv and returns it as a 2 dimensional list."""
     arr = []
     with open(file, 'r') as f:
         reader = csv.reader(f)
@@ -18,6 +20,7 @@ Drinks = ReadFile('Drinks Menu - Sheet1.csv')
 
 
 def Input(prompt):
+    """Checks every input for 'cancel' and returns an error if caught."""
     IN = input(prompt).lower()
     if IN == 'cancel':
         sys.exit('Canceled order')
@@ -25,7 +28,8 @@ def Input(prompt):
         return IN
 
 
-def checkAmount(user):
+def checkMainAmount(user):
+    """Returns the amount of meals from user input for the main courses"""
     while True:
         amount = Input(f'Hi {user}, How many main meals would you like to order? Max 4 \n')
         try:
@@ -48,6 +52,7 @@ def checkAmount(user):
 
 
 def GetOptions(menu, meal_num):
+    """Outputs the options in the selected meal and asks for user response"""
     if menu[meal_num][2] != '':
         opt = menu[meal_num][2].replace(', ', ' OR ')
         opt = opt.replace('/', ' OR ')
@@ -96,6 +101,7 @@ def GetOptions(menu, meal_num):
 
 
 def GetDrinkOptions(menu, drink_number):
+    """Does the same as GetOptions() but for drinks. """
     if menu[drink_number][2] != '':
         opt = menu[drink_number][2].replace(', ', ' OR ')
         opt = opt.replace('/', ' OR ')
@@ -125,6 +131,7 @@ def GetDrinkOptions(menu, drink_number):
 
 
 def PrintMainMenuAndOrder(menu, amount):
+    """Prints the main menu and gets user input for ordering"""
     print('Here is your main menu')
     for q in range(1, len(menu)):
         if menu[q][2] != '':
@@ -144,7 +151,8 @@ def PrintMainMenuAndOrder(menu, amount):
             print('Please enter a valid order number')
 
 
-def checkDrinkAmount(menu):
+def checkDrinkAmount():
+    """Gets the amount of drinks to order from user input"""
     while True:
         amount = Input('How many drinks would you like to order? Max 10.\n')
         try:
@@ -167,6 +175,7 @@ def checkDrinkAmount(menu):
 
 
 def PrintDrinkMenuAndOrder(menu, amount):
+    """Prints the drinks menu and orders from user input"""
     print('Here is your drinks menu:')
     for q in range(1, len(menu)):
         if menu[q][2] != '':
@@ -187,15 +196,16 @@ def PrintDrinkMenuAndOrder(menu, amount):
 
 
 def main():  # Initiates the order
+    """The order process."""
     print('Welcome to Quick Food. Enter cancel at any time to cancel the order.')
     orders = [[], []]  # [[Mains], [Drinks]]
     name = Input('What is your name? \n')
 
-    amn = checkAmount(name)
+    amn = checkMainAmount(name)
     for n in range(amn):
         orders[0].append(PrintMainMenuAndOrder(MainMenu, n + 1))
 
-    d_amn = checkDrinkAmount(Drinks)
+    d_amn = checkDrinkAmount()
     for r in range(d_amn):
         orders[1].append(PrintDrinkMenuAndOrder(Drinks, r + 1))
 
