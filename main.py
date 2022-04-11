@@ -216,10 +216,13 @@ def main():  # Initiates the order
         orders[1].append(PrintDrinkMenuAndOrder(Drinks, r + 1))
 
     price = 0
+    order_list = [] # All of the order information will be appended to this list to be outputted.
+
     for main_order in orders[0]:
         if type(main_order) == int:
             # If no options were selected the order type is an integer, adds price from menu
             price = price + float(MainMenu[main_order][4].replace('$', '0'))
+            order_list.append([MainMenu[main_order], MainMenu[main_order][4]])
 
         elif type(main_order) == list:
             # If there are options the type of order is a list with the meal number first and the options second [num, [Options, ...]
@@ -231,6 +234,7 @@ def main():  # Initiates the order
             optList = optList.split(' OR ')
             # Gets the original options as a list.
 
+            order_options = []
             for option in main_opt:
                 if '$' in optList[option - 1]:
                     # Checks if option has a $ in it.
@@ -238,22 +242,31 @@ def main():  # Initiates the order
                     m = re.search(s, optList[option - 1])
                     order_price = m.group(1)  # Returns the price found by the regex
                     price = price + float(order_price)  # Adds the option price.
+                order_options.append(optList[option - 1])
 
             price = price + float(MainMenu[main_num][4].replace('$', '0'))  # Adds the main price.
+            order_list.append([MainMenu[main_order[0]][0], f"({', '.join(order_options)})", MainMenu[main_order[0]][4]])
 
     for drink_order in orders[1]:
         if type(drink_order) == int:
             # If no option is chosen order is type int
             price = price + float(Drinks[drink_order][3].replace('$', '0'))  # Updates the price
+            order_list.append([Drinks[drink_order][0], Drinks[drink_order][3]])
 
         elif type(drink_order) == list:
             # If option is chosen order is type list
             drink_num = drink_order[0]
-            drink_opt = drink_order[1]  # Currently unused will be used if I had order printed after.
+            drink_opt = int(drink_order[1][0])  # Currently unused will be used if I had order printed after.
+            drink_option = Drinks[drink_num][2].split('/')
+
+            order_list.append([Drinks[drink_order[0]][0], f'({drink_option[drink_opt]})', Drinks[drink_order[0]][3]])
 
             price = price + float(Drinks[drink_num][3].replace('$', '0'))  # Currently no drink options affect price so can just use normal drink price.
 
-    print(f'\n The price is ${price}')  # Prints the total cost of the order
+    for row in order_list:
+        print(' '.join(row))
+
+    print(f'\nThe price is ${price}')  # Prints the total cost of the order
 
 
 if __name__ == '__main__':
