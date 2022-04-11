@@ -216,7 +216,7 @@ def main():  # Initiates the order
         orders[1].append(PrintDrinkMenuAndOrder(Drinks, r + 1))
 
     price = 0
-    order_list = [] # All of the order information will be appended to this list to be outputted.
+    order_list = []  # All of the order information will be appended to this list to be outputted.
 
     for main_order in orders[0]:
         if type(main_order) == int:
@@ -256,7 +256,7 @@ def main():  # Initiates the order
         elif type(drink_order) == list:
             # If option is chosen order is type list
             drink_num = drink_order[0]
-            drink_opt = int(drink_order[1][0])  # Currently unused will be used if I had order printed after.
+            drink_opt = int(drink_order[1][0])
             drink_option = Drinks[drink_num][2].split('/')
 
             order_list.append([Drinks[drink_order[0]][0], f'({drink_option[drink_opt]})', Drinks[drink_order[0]][3]])
