@@ -203,7 +203,12 @@ def main():  # Initiates the order
     """The order process."""
     print('Welcome to Quick Food. Enter cancel at any time to cancel the order.')
     orders = [[], []]  # [[Mains], [Drinks]]
-    name = Input('What is your name? \n')
+    while True:
+        name = Input('What is your name? \n')
+        if name == '':
+            print('Please enter a name')
+        else:
+            break
 
     amn = checkMainAmount(name)
     for n in range(amn):
@@ -222,7 +227,7 @@ def main():  # Initiates the order
         if type(main_order) == int:
             # If no options were selected the order type is an integer, adds price from menu
             price = price + float(MainMenu[main_order][4].replace('$', '0'))
-            order_list.append([MainMenu[main_order], MainMenu[main_order][4]])
+            order_list.append([MainMenu[main_order][0], MainMenu[main_order][4]])
 
         elif type(main_order) == list:
             # If there are options the type of order is a list with the meal number first and the options second [num, [Options, ...]
@@ -259,14 +264,17 @@ def main():  # Initiates the order
             drink_opt = int(drink_order[1][0])
             drink_option = Drinks[drink_num][2].split('/')
 
-            order_list.append([Drinks[drink_order[0]][0], f'({drink_option[drink_opt]})', Drinks[drink_order[0]][3]])
+            order_list.append([Drinks[drink_order[0]][0], f'({drink_option[drink_opt - 1]})', Drinks[drink_order[0]][3]])
 
             price = price + float(Drinks[drink_num][3].replace('$', '0'))  # Currently no drink options affect price so can just use normal drink price.
 
     for row in order_list:
         print(' '.join(row))
 
-    print(f'\nThe price is ${price}')  # Prints the total cost of the order
+    if price.is_integer():
+        print(f'\nThe price is ${int(price)}')  # Prints the total cost of the order as an integer if there is no decimal point
+    else:
+        print(f'\nThe price is ${price:.2f}')  # Prints the total cost of the order as a float with two decimal places for cents
 
 
 if __name__ == '__main__':
