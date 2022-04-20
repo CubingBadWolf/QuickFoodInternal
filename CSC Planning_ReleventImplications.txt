@@ -1,13 +1,13 @@
 ﻿Planning - See Flowchart.
-* I will write my code using the waterfall programming method. I will complete each section of the code piece by piece until that section is completed and I can write the next parts using the information obtained from the already completed sections. This includes writing functions.
-* I will test my code when I encounter problems from error messages or incorrect answers. Eg. Making sure a name is provided. That order numbers are both a number and a correct number. I will test to make sure these values are correct by entering both incorrect values and boundary cases such as -ve numbers or 0s
-* I have preset limits to order size to prevent malicious intent. 
+* I will write my code using the waterfall programming method. I will complete each section of the code piece by piece, until that section is completed. I can then write the next sections using the information obtained from the already completed sections. This includes writing functions.
+* I will test my code when I encounter problems from error messages or incorrect answers. Eg. Making sure a name is provided. That order numbers are both a number and a correct number. I will test to make sure these values are correct by entering both incorrect values and boundary cases such as -ve numbers or 0s.
+* I have preset limits to order size to prevent malicious intent.
 * Once the price has been calculated I will cross check with a calculator to confirm the values are correct.
 
 
 Relevant Implications.
-* The menu that my code uses is from the Mosgiel Tavern and I am free to use the menu in my example as I am not making any monetary income from this project.
-* My code is designed to be clear and easy to understand with the user who is ordering through my code, having what is expected from them communicated so they don’t get frustrated. 
-* I have dietary options communicated from v or gf if the meal is vegan or gluten free so people with dietary restrictions can also order through my code.
-* My code doesn’t keep any information stored as both the name and order is cleared after each
-* The aesthetics of the code is simple and easy to follow as it all is located within the pycharm terminal
+* The menu that my code uses is from the Mosgiel Tavern, and I am free to use the menu in my example, as I am not making any monetary income from this project.
+* My code is designed to be clear and easy to understand for the user who is ordering, having what is expected from them communicated so they don’t get frustrated.
+* I have dietary options communicated with v or gf if the meal is vegan or gluten free, so people with dietary restrictions can also order through my code.
+* My code doesn’t keep any information stored as both the name and order is cleared after each use.
+* The aesthetics of the code is simple and easy to follow as it all is located within the IDE's terminal.

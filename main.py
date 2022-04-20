@@ -37,9 +37,7 @@ def checkMainAmount(user):
             if 0 <= amount <= 4:
                 while True:
                     yn = Input(f'You entered {amount}. Is that correct Y/N')
-                    if not yn.isalpha():  # checks if yn is made out of alpha characters
-                        print('Please enter Y or N')
-                    elif yn == 'y':
+                    if yn == 'y':
                         return amount
                     elif yn == 'n':
                         break
@@ -135,10 +133,15 @@ def PrintMainMenuAndOrder(menu, amount):
     print('Here is your main menu')
     for q in range(1, len(menu)):
         if menu[q][2] != '':  # Checks if there is options to print.
-            print(
-                f"{q}: {menu[q][0]} - {menu[q][1]}: With options: {menu[q][2]}. - {menu[q][4]}")
+            if menu[q][3] != '':
+                print(f'{q}: {menu[q][0]} ({(menu[q][3].upper())}) - {menu[q][1]}: Options: {menu[q][2]}. - {menu[q][4]}')
+            else:
+                print(f"{q}: {menu[q][0]} - {menu[q][1]}: Options: {menu[q][2]}. - {menu[q][4]}")
         else:
-            print(f"{q}: {menu[q][0]} - {menu[q][1]}. - {menu[q][4]}")
+            if menu[q][3] != '':
+                print(f'{q}: {menu[q][0]} ({(menu[q][3]).upper()}) - {menu[q][1]} - {menu[q][4]}')
+            else:
+                print(f"{q}: {menu[q][0]} - {menu[q][1]}. - {menu[q][4]}")
 
     while True:
         order_num = Input(f'Main number {amount}: Which meal would you like to order? \n')
@@ -163,9 +166,7 @@ def checkDrinkAmount():
                     # Clarifies the amount given
 
                     yn = Input(f'You entered {amount}. Is that correct Y/N')
-                    if not yn.isalpha():  # Checks if there is any non alpha characters in the sting
-                        print('Please enter Y or N')
-                    elif yn == 'y':
+                    if yn == 'y':
                         return amount
                     elif yn == 'n':
                         break
@@ -268,10 +269,11 @@ def main():  # Initiates the order
 
             price = price + float(Drinks[drink_num][3].replace('$', '0'))  # Currently no drink options affect price so can just use normal drink price.
 
+    print(f'\n{name.capitalize()} here is your order.')
     for row in order_list:
         print(' '.join(row))
 
-    if price.is_integer():
+    if float(price).is_integer():
         print(f'\nThe price is ${int(price)}')  # Prints the total cost of the order as an integer if there is no decimal point
     else:
         print(f'\nThe price is ${price:.2f}')  # Prints the total cost of the order as a float with two decimal places for cents
