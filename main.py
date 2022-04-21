@@ -306,7 +306,7 @@ if __name__ == '__main__':  # Runs the code and begins the order process.
                 for item in total_order:  # Runs through all of the orders taken throughout the session and prints them
                     print(' '.join(item))
 
-                print(f'The total cost is ${cost:.2f}')
+                print(f'The total cost is ${current_order[1]:.2f}')
                 sys.exit('Thanks for ordering')  # Exits the code.
 
             else:
