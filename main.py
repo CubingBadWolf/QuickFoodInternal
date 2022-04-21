@@ -1,8 +1,6 @@
 import csv
 import re
 import sys
-
-
 # Imports the modules needed for this script
 
 
@@ -135,13 +133,12 @@ def PrintMainMenuAndOrder(menu, amount):
     print('Here is your main menu')
     for q in range(1, len(menu)):
         if menu[q][2] != '':  # Checks if there is options to print.
-            if menu[q][3] != '':
-                print(
-                    f'{q}: {menu[q][0]} ({(menu[q][3].upper())}) - {menu[q][1]}: Options: {menu[q][2]}. - {menu[q][4]}')
+            if menu[q][3] != '':  # Checks if the meal has dietary requirements.
+                print(f'{q}: {menu[q][0]} ({(menu[q][3].upper())}) - {menu[q][1]}: Options: {menu[q][2]}. - {menu[q][4]}')
             else:
                 print(f"{q}: {menu[q][0]} - {menu[q][1]}: Options: {menu[q][2]}. - {menu[q][4]}")
         else:
-            if menu[q][3] != '':
+            if menu[q][3] != '':  # Checks if the meal has dietary requirements.
                 print(f'{q}: {menu[q][0]} ({(menu[q][3]).upper()}) - {menu[q][1]} - {menu[q][4]}')
             else:
                 print(f"{q}: {menu[q][0]} - {menu[q][1]}. - {menu[q][4]}")
@@ -167,7 +164,6 @@ def checkDrinkAmount():
             if 0 <= amount <= 10:  # Sets a maximum amount of drinks to 10 and a min to 0
                 while True:
                     # Clarifies the amount given
-
                     yn = Input(f'You entered {amount}. Is that correct Y/N')
                     if yn == 'y':
                         return amount
@@ -186,7 +182,7 @@ def PrintDrinkMenuAndOrder(menu, amount):
     print('Here is your drinks menu:')
     for q in range(1, len(menu)):
         if menu[q][2] != '':
-            # Checks if there are any options to the meal
+            # Checks if there are any options to the drink
             print(f"{q}: {menu[q][0]} - {menu[q][1]}: with options: {menu[q][2]}. - {menu[q][3]}")
         else:
             print(f"{q}: {menu[q][0]} - {menu[q][1]}. - {menu[q][3]}")
@@ -237,8 +233,7 @@ def main(name, order_list, price):  # Initiates the order
             for option in main_opt:
                 if '$' in optList[option - 1]:
                     # Checks if option has a $ in it.
-                    s = re.compile(
-                        '\$([0-9.]+)')  # sets a regex compiler checking for $ + digits 0-9 and a decimal point as many as it can.
+                    s = re.compile('\$([0-9.]+)')  # sets a regex compiler checking for $ + digits 0-9 and a decimal point as many as it can.
                     m = re.search(s, optList[option - 1])
                     order_price = m.group(1)  # Returns the price found by the regex
                     price = price + float(order_price)  # Adds the option price.
@@ -269,11 +264,9 @@ def main(name, order_list, price):  # Initiates the order
         print(' '.join(row))
 
     if float(price).is_integer():
-        print(
-            f'\nThe price is ${int(price)}')  # Prints the total cost of the order as an integer if there is no decimal point
+        print(f'\nThe price is ${int(price)}')  # Prints the total cost of the order as an integer if there is no decimal point
     else:
-        print(
-            f'\nThe price is ${price:.2f}')  # Prints the total cost of the order as a float with two decimal places for cents
+        print(f'\nThe price is ${price:.2f}')  # Prints the total cost of the order as a float with two decimal places for cents
 
     return [order_list, price]
 
@@ -291,11 +284,12 @@ if __name__ == '__main__':  # Runs the code and begins the order process.
     while True:
 
         current_order = main(user, total_order, cost)  # Runs the script and saves the information as a variable.
-        cost = cost + current_order[1]  # Adds the cost from the last order to the total amount.
+        cost = current_order[1]  # Adds the cost from the last order to the total amount.
 
         '''for r in range(len(current_order[0])):  # Current order includes the orders in position - and then the price.
             total_order.append(current_order[0][r])  # Add the current order to the total list.'''
-        # I am confused because despite this code being commented it is still appeneding the total list before this was even called.
+        # This code was automatically completed without being called. I would be interested to understand how python completed this case.
+        # However the programming is running correctly and such I have accepted this. When this code was uncommented it would add everything twice.
         while True:
             order_again = Input('Do you want to order anything else? Y/N \n')
             if order_again == 'y':
